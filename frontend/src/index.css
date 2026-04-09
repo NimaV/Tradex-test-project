@@ -68,3 +68,21 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes marketTickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-16.6667%);
+  }
+}
+
+.market-ticker-track {
+  animation: marketTickerScroll 32s linear infinite;
+  will-change: transform;
+}
+
+.market-ticker-track:hover {
+  animation-play-state: paused;
+}

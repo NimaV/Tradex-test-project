@@ -5,8 +5,10 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const discussionRoutes = require('./routes/discussion');
 const strategyRoutes = require('./routes/strategy');
+const marketRoutes = require('./routes/market');
 const { errorHandler } = require('./middleware/errorHandler');
 const logger = require('./middleware/logger');
+const { startMarketDataJob } = require('./services/marketDataService');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,9 +26,13 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/discussions', discussionRoutes);
 app.use('/api/strategies', strategyRoutes);
+app.use('/api/market', marketRoutes);
 
 // Error handling
 app.use(errorHandler);
+
+// Start background market refresh job
+startMarketDataJob();
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
